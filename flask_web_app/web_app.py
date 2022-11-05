@@ -66,7 +66,7 @@ def my_form_post():
     # dataframe.to_csv('11_20_out.csv', index=False)
     final_response = (rule_based_resp , dynamic_rule_based_resp)
     # print( ' ==================== THE FINAL RESPONESE IS ==============',final_response)
-    return render_template("ChattyMira.html",text = final_response)
+    return render_template("ChattyMira.html",text = final_response[0],text2 = final_response[1])
     
 if __name__ == "__main__":
     app.run(debug=True)   
