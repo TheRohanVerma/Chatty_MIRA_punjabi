@@ -711,6 +711,27 @@ blockquote {
   resize: none;
   min-height: 100px;
 }
+.caja {
+  background-color: rgb(255, 255, 255);
+  width: 99%;
+  height: 100px;
+  border: 1px solid black;
+  margin: 5px;
+}
+.caja-grande {
+  background-color:  rgba(0, 137, 161, 0.595);
+  border: 1px solid black;
+  padding: 5px;
+
+  width: 100%;
+  margin: 5px;
+  font-size: 0
+}
+.inline-block {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 16px;
+}
 
 /* When the textarea gets focus, do something */
 .form-container textarea:focus {
@@ -729,7 +750,36 @@ blockquote {
   margin-bottom:10px;
   opacity: 0.8;
 }
+.fancy-box-with-button {
+  background-color: white;
+  border-radius: 4px;
+  margin: 10px;
+  display: block;
+  position: relative;
+  height: 30px;
+  box-sizing: border-box;
+  padding-right: 100px;
+}
 
+.fancy-box-with-button input {
+  height: 100%;
+  width: 100%;
+  border: dashed black 1px;
+  margin: 0;
+  background-color: rgba(0, 137, 161, 0.595);
+}
+
+.fancy-box-with-button button {
+  position: relative;
+  top: 0;
+  right: 0;
+  margin: 0;
+  height: 100%;
+  width: 100px;
+  border: solid black 1.5px;
+  color: black;
+  background-color: rgb(139, 215, 111);
+}
 .inline-btn {
 	display: inline-block;
 	width: 100%;
@@ -758,11 +808,26 @@ It first detects user’s input <strong>emotion </strong>and then based on the d
 </div>
 
 <form method="POST">
-    <input name="text">
+    
+	<div class="fancy-box-with-button">
+		<input name="text">
     <input type="submit">
+	</div>
 </form>
-Static response - <span class="label text1">{{text}}</span> <br>
-Dynamic Response - <span class="label text2">{{text2}}</span> 
+
+
+  
+
+<div class="caja-grande">
+  <div class="caja inline-block">
+    <span class="label text1">Static response - {{text}}</span>
+  </div>
+  <div class="caja inline-block">
+	<span class="label text2">Dynamic Response -{{text2}}</span>
+  </div>
+
+</div>
+
 
 
 </body></html>
