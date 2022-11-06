@@ -15,7 +15,6 @@ nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 #delete for deployment
 # import argparse
-import nltk
 # from nltk.corpus import wordnet
 from nltk import word_tokenize
 from nltk import pos_tag
@@ -1248,7 +1247,33 @@ class ActionEliza():
         sentence = sentence.lower()
 
         import_words = []
-        tokens = word_tokenize(sentence)
+
+        ''' 
+        
+        
+        
+        
+        
+        
+        
+        GOTTA TOKENIZE IN PUNJABI 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        '''
+        # tokens = word_tokenize(sentence)
+        tokens = sentence.split()
+        print('tokeenss are ***************************',tokens)
         for word in nltk.pos_tag(tokens):
             if(word[1] in ('NN', 'NNS', 'NNP', 'JJ', 'ADV', 'VB', 'VBG', 'VBP', 'PRP') or word[0] in ('no', 'yes', 'if', 'dreamed')):
                 import_words.append(word[0])
