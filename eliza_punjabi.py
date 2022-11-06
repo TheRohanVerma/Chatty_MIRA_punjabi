@@ -2,17 +2,17 @@
 import regex 
 import random
 # import pandas as pd
-from inltk.inltk import tokenize
-from inltk.inltk import setup
-setup('pa') 
-# import nltk
+# from inltk.inltk import tokenize
+# from inltk.inltk import setup
+# setup('pa') 
+import nltk
 # nltk.download('punkt')
 # nltk.download('averaged_perceptron_tagger')
 #delete for deployment
 # import argparse
 # from nltk.corpus import wordnet
-# from nltk import word_tokenize
-# from nltk import pos_tag
+from nltk import word_tokenize
+from nltk import pos_tag
 # from inltk.inltk import get_sentence_similarity
 
 
@@ -1263,13 +1263,14 @@ class ActionEliza():
         sentence = sentence.lower()
 
         import_words = []
-        _ = tokenize(sentence ,'pa')
-
-        # tokens = word_tokenize(sentence)
-        tokens = []
-        for i in _:
-            tokens.append(i[1:])
+        tokens = word_tokenize(sentence) 
+        # _ = tokenize(sentence ,'pa')
         print(tokens)
+        # # tokens = word_tokenize(sentence)
+        # tokens = []
+        # for i in _:
+        #     tokens.append(i[1:])
+        # print(tokens)
         # print(' pos tokens ' , nltk.pos_tag(tokens))
         for word in tokens:
             # if(word[1] in ('NN', 'NNS', 'NNP', 'JJ', 'ADV', 'VB', 'VBG', 'VBP', 'PRP') or word[0] in ('ਨਹੀਂ', 'ਜੇਕਰ','ਜੇ', 'ਸੁਪਨਾ')): # cannot include 'yes' here
