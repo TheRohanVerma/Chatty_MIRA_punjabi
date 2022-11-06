@@ -9,17 +9,17 @@ import random
 # import torch.nn.functional as F
 # import ktrain
 # from ktrain import text
-import pandas as pd
+# import pandas as pd
 
 import nltk
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 #delete for deployment
 # import argparse
-import nltk
-# from nltk.corpus import wordnet
-from nltk import word_tokenize
-from nltk import pos_tag
+# import nltk
+# # from nltk.corpus import wordnet
+# from nltk import word_tokenize
+# from nltk import pos_tag
 
 
 #debuging in this machine only
@@ -62,7 +62,7 @@ def my_form_post():
     dynamic_rule_based_resp = rule_based_dynamic_key_resp["response"] 
 
 
-    dataframe = (pd.DataFrame.from_dict(test_data)).to_string()
+    # dataframe = (pd.DataFrame.from_dict(test_data)).to_string()
     # dataframe.to_csv('11_20_out.csv', index=False)
     final_response = (rule_based_resp , dynamic_rule_based_resp)
     # print( ' ==================== THE FINAL RESPONESE IS ==============',final_response)

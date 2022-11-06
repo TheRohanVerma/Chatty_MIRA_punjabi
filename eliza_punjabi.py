@@ -1,23 +1,20 @@
 
 import regex 
 import random
-
-#should be added
-# from transformers import AutoTokenizer, AutoModel, AutoModelForSeq2SeqLM, AutoModelForSequenceClassification, GPT2LMHeadModel, GPT2Tokenizer
-# import torch
-# import torch.nn.functional as F
-# import ktrain
-# from ktrain import text
-import pandas as pd
-
-import nltk
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
+# import pandas as pd
+from inltk.inltk import tokenize
+from inltk.inltk import setup
+setup('pa') 
+# import nltk
+# nltk.download('punkt')
+# nltk.download('averaged_perceptron_tagger')
 #delete for deployment
 # import argparse
 # from nltk.corpus import wordnet
-from nltk import word_tokenize
-from nltk import pos_tag
+# from nltk import word_tokenize
+# from nltk import pos_tag
+# from inltk.inltk import get_sentence_similarity
+
 
 class ActionEliza():
 
@@ -1241,51 +1238,56 @@ class ActionEliza():
             reg = reg[0][1:]
             return decomp.replace('@'+reg, '('+'|'.join(self.find_syns(reg))+')')
         return decomp
-        
+
+    # def calculate_cosine_simillarity_with_rule_keys(self, user_input, decomposition_rules):
+    #     for dec_rule in decomposition_rules:
+    #         cos_similarities= []
+    #         cos_similarity = get_sentence_similarity(user_input, dec_rule, 'pa')
+    #         cos_similarities.append((
+    #             sim_score1,
+    #             docs_sent_token
+    #         ))
+    #     cos_similarities.sort(key=lambda k: k[0], reverse=True)
+    #     cos_similarities = [set(t) for t in cos_similarities]
+
+    #     result = []
+    #     for i in cos_similarities:
+    #         result.append(i[1])
+    #     return result
+
+
+
+
     def rank_sent_for_tags(self, sentence, tags, reasmb_rule):
         result = {}
         sentence = sentence.lower()
 
         import_words = []
+        _ = tokenize(sentence ,'pa')
 
-        ''' 
-        
-        
-        
-        
-        
-        
-        
-        GOTTA TOKENIZE IN PUNJABI 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        '''
         # tokens = word_tokenize(sentence)
-        tokens = sentence.split()
-        print('tokeenss are ***************************',tokens)
-        for word in nltk.pos_tag(tokens):
-            if(word[1] in ('NN', 'NNS', 'NNP', 'JJ', 'ADV', 'VB', 'VBG', 'VBP', 'PRP') or word[0] in ('no', 'yes', 'if', 'dreamed')):
-                import_words.append(word[0])
+        tokens = []
+        for i in _:
+            tokens.append(i[1:])
+        print(tokens)
+        # print(' pos tokens ' , nltk.pos_tag(tokens))
+        for word in tokens:
+            # if(word[1] in ('NN', 'NNS', 'NNP', 'JJ', 'ADV', 'VB', 'VBG', 'VBP', 'PRP') or word[0] in ('ਨਹੀਂ', 'ਜੇਕਰ','ਜੇ', 'ਸੁਪਨਾ')): # cannot include 'yes' here
+            if(word in ('ਨਹੀਂ', 'ਜੇਕਰ','ਜੇ', 'ਸੁਪਨਾ')): # cannot include 'yes' here
+                import_words.append(word)
         
         rule_keys = list(map(lambda x:x[1],tags))
         print('sentence', sentence)
+
+        # print ( 'rule keys ------------',rule_keys)
+
         # most_simillar_keys_from_CosSimilarity = self.calculate_cosine_simillarity_with_rule_keys(sentence, rule_keys)
+        # print('cosine similari ------------',most_simillar_keys_from_CosSimilarity)
 
         for tag in tags:
             ranking = {'key':tag[0], 'score':0.00001, 'decomp':tag[1], reasmb_rule:tag[2]}
             if tag[0] in import_words:
-                if tag[0] not in ("i", "am"): 
+                if tag[0] not in ("ਮੈਂ", "ਹਾਂ"): 
                     ranking['score'] += 1
                 else:
                     ranking['score'] += 0.3
@@ -1299,7 +1301,7 @@ class ActionEliza():
                 decomp_with_syn = self.replace_decomp_with_syns(tag[1])
                 for decomp_word in decomp_with_syn.replace("|", " ").replace("(", " ").replace(")", " ").split(" "):
                     if decomp_word == imp_word:
-                        if decomp_word not in ("i", "am") : 
+                        if decomp_word not in ("ਮੈਂ", "ਹਾਂ") : 
                             ranking['score'] += 0.5
                         else:
                             ranking['score'] += 0.3
@@ -1315,7 +1317,7 @@ class ActionEliza():
             reg = reg.replace('*', r'(.*)?').replace(' ', r'\s')
             ranking['decomp'] = reg
             found = regex.findall(reg, sentence)
-            if reg == "(.*)?i\\s(desire|want|need)\\s(.*)?":
+            if reg == "(.*)?i\\s(ਇੱਛਾ|ਚਾਹੁੰਦੇ|ਚਾਹੁੰਦਾ|ਚਾਹੀਦਾ)\\s(.*)?":
                 print(reg, sentence)
             if found:
                 ranking['score'] += 20
@@ -1391,7 +1393,7 @@ class ActionEliza():
     #this is the main function which generates final response
     def generate_final_response(self, user_sentence, num_run_eliza, generate_from_reasmbl3):
         user_sentence = user_sentence[:-1]
-        user_sentence = user_sentence.replace("  ", " ").replace(" no one ", " noone ")
+        user_sentence = user_sentence.replace("  ", " ")#.replace(" no one ", " noone ")
         reasmb_rule = 'reasmb_empathy'
         if num_run_eliza>1: reasmb_rule = 'reasmb_neutral'
         if generate_from_reasmbl3: reasmb_rule = 'reasmb_dynamic_neutral'
