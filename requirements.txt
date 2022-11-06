@@ -1,4 +1,3 @@
-nltk==3.6.5
-pandas==1.3.4
+inltk==0.9
 gunicorn==20.1.0
 flask==2.2.2
