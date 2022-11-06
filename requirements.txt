@@ -32,14 +32,6 @@ schedule==1.1.0
 scikit-image==0.18.3
 sentencepiece==0.1.97
 simplegeneric==0.8.1
-sip==4.19.13
-smart-open==5.2.1
-spacy==3.4.2
-spacy-legacy==3.0.10
-spacy-loggers==1.0.3
-Sphinx==4.2.0
-srsly==2.4.5
-syntok==1.4.4
 tokenizers==0.12.1
 torch==1.12.1
 torchaudio==0.12.1
