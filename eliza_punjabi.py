@@ -1392,19 +1392,13 @@ class ActionEliza():
         return generated_response
         
     #this is the main function which generates final response
-    def generate_final_response(self, user_sentence, num_run_eliza, generate_from_reasmbl3 , detected_emotion):
+    def generate_final_response(self, user_sentence, num_run_eliza, generate_from_reasmbl3):
         user_sentence = user_sentence[:-1]
         user_sentence = user_sentence.replace("  ", " ")#.replace(" no one ", " noone ")
         reasmb_rule = 'reasmb_empathy'
         if num_run_eliza>1: reasmb_rule = 'reasmb_neutral'
         if generate_from_reasmbl3: reasmb_rule = 'reasmb_dynamic_neutral'
-        if detected_emotion in ['sad','anger','fear']:
 
-            reasmb_rule = 'reasmb_empathy'
-            if num_run_eliza>1: reasmb_rule = 'reasmb_empathy'
-            if generate_from_reasmbl3: reasmb_rule = 'reasmb_dynamic_neutral'
-        
-        print('================= ',reasmb_rule,' =================')
         key_score_decomp_ar = self.rank_sent_for_tags(user_sentence, list(map(lambda c: [c['key'], c['decomp'], c[reasmb_rule]] ,self.sample_generator_rules['dec_rules'])), reasmb_rule)
         best_key_decomp_reasmb = list(map(lambda i: i[1] ,sorted(key_score_decomp_ar.items(), key=lambda i: i[1]['score'], reverse=True)[:5]))[0]
         gen = self.generate_eliza_response(best_key_decomp_reasmb['decomp'], user_sentence, random.choice(best_key_decomp_reasmb[reasmb_rule]))
