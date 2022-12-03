@@ -1,13 +1,10 @@
 
 import regex 
 import random
-# import pandas as pd
-# from inltk.inltk import tokenize
-# from inltk.inltk import setup
-# setup('pa') 
+
 import nltk
 
-t
+
 from nltk import word_tokenize
 
 
