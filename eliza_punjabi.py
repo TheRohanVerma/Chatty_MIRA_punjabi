@@ -6,14 +6,9 @@ import random
 # from inltk.inltk import setup
 # setup('pa') 
 import nltk
-# nltk.download('punkt')
-# nltk.download('averaged_perceptron_tagger')
-#delete for deployment
-# import argparse
-# from nltk.corpus import wordnet
+
+t
 from nltk import word_tokenize
-from nltk import pos_tag
-# from inltk.inltk import get_sentence_similarity
 
 
 class ActionEliza():
@@ -1271,7 +1266,6 @@ class ActionEliza():
         # for i in _:
         #     tokens.append(i[1:])
         # print(tokens)
-        # print(' pos tokens ' , nltk.pos_tag(tokens))
         for word in tokens:
             # if(word[1] in ('NN', 'NNS', 'NNP', 'JJ', 'ADV', 'VB', 'VBG', 'VBP', 'PRP') or word[0] in ('ਨਹੀਂ', 'ਜੇਕਰ','ਜੇ', 'ਸੁਪਨਾ')): # cannot include 'yes' here
             if(word in ('ਨਹੀਂ', 'ਜੇਕਰ','ਜੇ', 'ਸੁਪਨਾ')): # cannot include 'yes' here
