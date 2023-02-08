@@ -1,13 +1,14 @@
-
 import regex 
 import random
-
-import nltk
-from nltk import word_tokenize
-
+'''
+THE CHATTY MIRA WAS IMPLEMENTED BY MOHAMAD ALI GHARAT AS PART OF HIS THESIS AT UNIVERSITY OF ALBERTA.
+MOST OF CHATTY MIRA'S CODE HAS BEEN REUSED AND CHANGED FOR PUNJABI LANGUAGE. FOR DETAILED IMPLEMENTATIONS AND CODE EXPLANATION ,
+REFER TO MOHAMAD'S WORK.
+'''
 
 class ActionEliza():
 
+    # this dictionary has all the rules which 
     sample_generator_rules =  {
         'synonyms':[
             ["ਵਿਸ਼ਵਾਸ", "ਮਹਿਸੂਸ", "ਸੋਚਣਾ","ਇੱਛਾ"],
@@ -19,10 +20,11 @@ class ActionEliza():
             ["ਮਾਫ਼","ਮਾਫ਼ੀ","ਮਾਫ਼ ਕਰਨਾ"], # ----- ADDED THIS SECOND WORD HERE. MIGHT CAUSE SOME ISSUES LATER
             ["ਹਰ ਕੋਈ", "ਕੋਈ ਨਹੀਂ"],
             ["ਹੋ", "ਮੈਂ", "ਹੈ", "ਹੈ", "ਸੀ","ਮੈਨੂੰ"],
-            ["ਹੈਲੋ", "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ"] # we can try to use the SSK greeting
+            ["ਹੈਲੋ", "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ"] # I have added a greeting which is exclusive to punjabi language
         ],
         'dec_rules':[
             {
+                # 
                 # 'key': 'sorry',
                 # 'decomp': '* sorry *',
                 'key': 'ਮਾਫ਼ੀ',
@@ -650,10 +652,6 @@ class ActionEliza():
             },
             
             
-
-# ============================== SENT FROM HERE ==================
-
-            
             {   
               #   'key': 'i ',
               #  'decomp': "*",
@@ -1038,12 +1036,8 @@ class ActionEliza():
                 ],
             }
 
-
-
             ,
-            {
-                  #   -----------------  do we need to add the two words to make them one -----------------
-             
+            {             
 
                 # 'key': 'noone',
                 # 'decomp': "*noone *",  
@@ -1188,7 +1182,7 @@ class ActionEliza():
                     "ਉਹ ਸਮਾਨਤਾ ਤੁਹਾਨੂੰ ਕੀ ਸੁਝਾਅ ਦਿੰਦੀ ਹੈ?",
                     "ਤੁਸੀਂ ਹੋਰ ਕਿਹੜੇ ਕੁਨੈਕਸ਼ਨ ਦੇਖਦੇ ਹੋ ?",
                     "ਤੁਸੀਂ ਕੀ ਮੰਨਦੇ ਹੋ ਕਿ ਸਮਾਨਤਾ ਦਾ ਮਤਲਬ ਹੈ ?",
-                    "ਕੀ ਕੁਨੈਕਸ਼ਨ ਹੈ, ਕੀ ਤੁਸੀਂ ਮੰਨਦੇ ਹੋ?", # ---------------WEIRD SENTENCE ------
+                    "ਕੀ ਕੁਨੈਕਸ਼ਨ ਹੈ, ਕੀ ਤੁਸੀਂ ਮੰਨਦੇ ਹੋ?", # ---------------WEIRD SENTENCE ; Some sentences cannot be changed without changing the english translation ------
                     "ਕੀ ਅਸਲ ਵਿੱਚ ਕੁਝ ਕੁਨੈਕਸ਼ਨ ਹੋ ਸਕਦਾ ਹੈ ?"
                 ],
                 'reasmb_empathy':
@@ -1216,6 +1210,7 @@ class ActionEliza():
 
   
     def find_syns(self, word):
+        # this function looks at synonyms of user inputs to generalize the response creation to a wider set of user inputs
         syn_ars = self.sample_generator_rules['synonyms']
         for ar in syn_ars:
             if word in ar:
@@ -1223,27 +1218,13 @@ class ActionEliza():
         return []
 
     def replace_decomp_with_syns(self, decomp):
+        # replaces a word in the decomposition rules with the synonym 
         reg = regex.findall( r'@\w+' ,decomp)
         if reg:
             reg = reg[0][1:]
             return decomp.replace('@'+reg, '('+'|'.join(self.find_syns(reg))+')')
         return decomp
 
-    # def calculate_cosine_simillarity_with_rule_keys(self, user_input, decomposition_rules):
-    #     for dec_rule in decomposition_rules:
-    #         cos_similarities= []
-    #         cos_similarity = get_sentence_similarity(user_input, dec_rule, 'pa')
-    #         cos_similarities.append((
-    #             sim_score1,
-    #             docs_sent_token
-    #         ))
-    #     cos_similarities.sort(key=lambda k: k[0], reverse=True)
-    #     cos_similarities = [set(t) for t in cos_similarities]
-
-    #     result = []
-    #     for i in cos_similarities:
-    #         result.append(i[1])
-    #     return result
 
 
 
@@ -1253,26 +1234,14 @@ class ActionEliza():
         sentence = sentence.lower()
 
         import_words = []
-        tokens = word_tokenize(sentence) 
-        # _ = tokenize(sentence ,'pa')
-        print(tokens)
-        # # tokens = word_tokenize(sentence)
-        # tokens = []
-        # for i in _:
-        #     tokens.append(i[1:])
-        # print(tokens)
+        tokens = sentence.split() #using the split() function as punjabi tokenizers were doing the same # we can use inltk's tokenizer but that creates problems when deploying on heroku
         for word in tokens:
-            # if(word[1] in ('NN', 'NNS', 'NNP', 'JJ', 'ADV', 'VB', 'VBG', 'VBP', 'PRP') or word[0] in ('ਨਹੀਂ', 'ਜੇਕਰ','ਜੇ', 'ਸੁਪਨਾ')): # cannot include 'yes' here
+            # pos_tag would be very crucial here to give importance to certain type of words
             if(word in ('ਨਹੀਂ', 'ਜੇਕਰ','ਜੇ', 'ਸੁਪਨਾ')): # cannot include 'yes' here
                 import_words.append(word)
         
         rule_keys = list(map(lambda x:x[1],tags))
         print('sentence', sentence)
-
-        # print ( 'rule keys ------------',rule_keys)
-
-        # most_simillar_keys_from_CosSimilarity = self.calculate_cosine_simillarity_with_rule_keys(sentence, rule_keys)
-        # print('cosine similari ------------',most_simillar_keys_from_CosSimilarity)
 
         for tag in tags:
             ranking = {'key':tag[0], 'score':0.00001, 'decomp':tag[1], reasmb_rule:tag[2]}
@@ -1282,8 +1251,6 @@ class ActionEliza():
                 else:
                     ranking['score'] += 0.3
 
-            # if tag[1] in most_simillar_keys_from_CosSimilarity:
-            #     ranking['score']+=10
 
             for imp_word in import_words:
 
@@ -1296,9 +1263,7 @@ class ActionEliza():
                         else:
                             ranking['score'] += 0.3
 
-                
-            #ranking['score'] /= len(import_words)
-
+            
             number_of_stars = len(list(filter(lambda i: i=='*' ,tag[1])))
             ranking['score'] += number_of_stars*0.30
             
@@ -1356,7 +1321,6 @@ class ActionEliza():
                     .replace(' ਹਾਂ ', ' ਹੋੋ ')\
                     .replace(' ਮੈਨੂੰ', ' ਤੁਹਾਨੂੰ')\
                     .replace(' ਮੈਂ ', ' ਤੁਸੀ ')
-                      # .replace(' noone', ' no one')\.     ------------ > combine words?
 
                 generated_response = generated_response.replace("("+str(index)+")", res)
             else:
@@ -1381,13 +1345,19 @@ class ActionEliza():
         return generated_response
         
     #this is the main function which generates final response
-    def generate_final_response(self, user_sentence, num_run_eliza, generate_from_reasmbl3):
+    def generate_final_response(self, user_sentence, num_run_eliza, generate_from_reasmbl3 , detected_emotion):
         user_sentence = user_sentence[:-1]
         user_sentence = user_sentence.replace("  ", " ")#.replace(" no one ", " noone ")
         reasmb_rule = 'reasmb_empathy'
         if num_run_eliza>1: reasmb_rule = 'reasmb_neutral'
         if generate_from_reasmbl3: reasmb_rule = 'reasmb_dynamic_neutral'
+        if detected_emotion in ['sad','anger','fear']:
 
+            reasmb_rule = 'reasmb_empathy'
+            if num_run_eliza>1: reasmb_rule = 'reasmb_empathy'
+            if generate_from_reasmbl3: reasmb_rule = 'reasmb_dynamic_neutral'
+        
+        print('================= ',reasmb_rule,' =================')
         key_score_decomp_ar = self.rank_sent_for_tags(user_sentence, list(map(lambda c: [c['key'], c['decomp'], c[reasmb_rule]] ,self.sample_generator_rules['dec_rules'])), reasmb_rule)
         best_key_decomp_reasmb = list(map(lambda i: i[1] ,sorted(key_score_decomp_ar.items(), key=lambda i: i[1]['score'], reverse=True)[:5]))[0]
         gen = self.generate_eliza_response(best_key_decomp_reasmb['decomp'], user_sentence, random.choice(best_key_decomp_reasmb[reasmb_rule]))

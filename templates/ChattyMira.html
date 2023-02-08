@@ -719,7 +719,7 @@ blockquote {
   margin: 5px;
 }
 .caja-grande {
-  background-color:  rgba(0, 137, 161, 0.595);
+  background-color:  rgba(0, 137, 161, 0.271);
   border: 1px solid black;
   padding: 5px;
 
@@ -766,7 +766,7 @@ blockquote {
   width: 100%;
   border: dashed black 1px;
   margin: 0;
-  background-color: rgba(0, 137, 161, 0.595);
+  background-color: rgba(0, 137, 161, 0.289);
 }
 
 .fancy-box-with-button button {
@@ -800,13 +800,15 @@ blockquote {
   </div>
 
 </style></head><body>
-<article id="29617a83-4603-4d07-9e50-cab50e0082ab" class="page sans"><header><img class="page-cover-image" src="{{ url_for('static', filename = "DALL·E 2022-11-02 15.16.50.png") }}" style="object-position:center 21.840000000000003%"/><h1 class="page-title">Chatty Mira (former eEliza)</h1></header><div class="page-body"><p id="63ffe056-17c2-42e9-a65f-c95f1f208339" class="">This web app hosts the Punjabi version of Chatty MIRA. This web app was inspired from work  of Mohamad Ali Gharaat. Please refer to the Capstone Report for more details. </p><p id="1037ce6f-9b0c-4a11-852a-7c28ec1012f9" class=""></p><p id="b4ccbe21-c12e-490b-908a-a55071d74af8" class="">
+<article id="29617a83-4603-4d07-9e50-cab50e0082ab" class="page sans"><header><img class="page-cover-image" src="{{ url_for('static', filename = "DALL·E 2022-11-02 15.16.50.png") }}" style="object-position:center 21.840000000000003%"/><h1 class="page-title">Punjabi Chatty Mira </h1></header><div class="page-body"><p id="63ffe056-17c2-42e9-a65f-c95f1f208339" class="">This web app hosts the Punjabi version of Chatty MIRA. This web app was inspired from work  of Mohamad Ali Gharaat. Please refer to the Capstone Report for more details. </p><p id="1037ce6f-9b0c-4a11-852a-7c28ec1012f9" class=""></p><p id="b4ccbe21-c12e-490b-908a-a55071d74af8" class="">
 </p><h2 id="4003ed93-6506-4506-b259-73c6295b9f47" class="">🍴 Introduction</h2><p id="64ccbf1c-4299-470c-9a71-9158de1f30e9" class="">💬 <strong>You may ask how “Chatty Mira” works for Punjabi language? </strong>
-It first detects user’s input <strong>emotion </strong>and then based on the detected <strong>emotion </strong>it will generate an empathetic or neutral response. Responses to <mark class="highlight-red">Sad, Angry, Fear</mark> will be with <mark class="highlight-red_background">empathy</mark> while responses to <mark class="highlight-blue">joy</mark>, and <mark class="highlight-blue">neutral</mark> will be with <mark class="highlight-blue_background">neutral</mark> sentences. This is an older version of the web app without the emotion detection part. For details on final version of Chatty MIRA with emotion deteciton, please refer to the Capstone Report. </p><p id="e63e1a16-873a-46bc-a0af-7ffafffea492" class="">
+It first detects user’s input <strong>emotion </strong>and then based on the detected <strong>emotion </strong>it will generate an empathetic or neutral response. Responses to <mark class="highlight-red">Sad, Angry, Fear</mark> will be with <mark class="highlight-red_background">empathy</mark> while responses to <mark class="highlight-blue">joy</mark>, and <mark class="highlight-blue">neutral</mark> will be with <mark class="highlight-blue_background">neutral</mark> sentences. </p><p id="e63e1a16-873a-46bc-a0af-7ffafffea492" class="">
 </p><h2 id="69902cf8-7515-4dea-8036-090d22c7fb47" class="">🤹🏻‍♀️ How to use? </h2><p id="77968d20-9071-45e6-8137-1b3852bc0a48" class="">You can talk about anything and see how Chatty MIRA responds in Punjabi.</p>
 <p id="77968d20-9071-45e6-8137-1b3852bc0a48" class="">Please give your input in the text box below. </p>
 </div>
+
 <form method="POST">
+    
 	<div class="fancy-box-with-button">
 		<input name="text">
     <input type="submit">
@@ -814,12 +816,17 @@ It first detects user’s input <strong>emotion </strong>and then based on the d
 </form>
 
 
+  
+
 <div class="caja-grande">
   <div class="caja inline-block">
-    <span class="label text1">Static response - {{text}}</span>
+    <span class="label text1">     Static response - {{text}}</span>
   </div>
   <div class="caja inline-block">
 	<span class="label text2">Dynamic Response -{{text2}}</span>
+  </div>
+  <div class="caja inline-block">
+	<span class="label text3">Detected emotion -{{text3}}</span>
   </div>
 
 </div>
